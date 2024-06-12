@@ -1,28 +1,22 @@
-import { useEffect, useState } from 'react'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Home from './pages/Home/home';
+import Login from './pages/Login/login';
+import Register from './pages/Register/register';
+import './app.css';
+import { Results } from './pages/results';
 
-export function App() {
-  const [list, useList] = useState(() => [])
-  useEffect(() => {
-    fetch('http://localhost:5000/companies')
-      .then(response => response.json())
-      .then(data => {
-        useList(data)
-        console.log(data)
-      })
-  }, [])
-
-  const listItems = list.map(product =>
-    <li className='companyItem' key={product.id}>
-      <h3>{product.name}</h3>
-      <p>{product.description}</p>
-    </li>
-  )
-  
-  if (list.length === 0) 
-    return <p>Loading...</p>
+export default function App() {
   return (
-    <div style={{color: '#fff', width:'100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-      <ul>{listItems}</ul>
-    </div>
-  )
-}
+  <Router>
+      <div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/results" element={<Results />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+};
